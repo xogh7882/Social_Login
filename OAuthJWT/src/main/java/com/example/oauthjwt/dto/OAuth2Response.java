@@ -1,5 +1,8 @@
 package com.example.oauthjwt.dto;
 
+
+// Oauth2 공통 인터페이스
+
 public interface OAuth2Response {
     //제공자 (Ex. naver, google, ...)
     String getProvider();

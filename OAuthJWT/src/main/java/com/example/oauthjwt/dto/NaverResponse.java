@@ -1,7 +1,10 @@
 package com.example.oauthjwt.dto;
 
+import lombok.ToString;
+
 import java.util.Map;
 
+@ToString
 public class NaverResponse implements OAuth2Response {
 
     private final Map<String, Object> attribute;

@@ -30,10 +30,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if(registrationId.equals("naver")){
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
+            System.out.println(oAuth2Response);
         }
 
         else if(registrationId.equals("google")){
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
+            System.out.println(oAuth2Response);
         }
 
         else{
@@ -72,6 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userDTO.setUsername(existData.getUsername());
             userDTO.setName(oAuth2Response.getName());
             userDTO.setRole(existData.getRole());
+
 
             return new CustomOAuth2User(userDTO) ;
         }
