@@ -76,7 +76,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userDTO.setName(oAuth2Response.getName());
             userDTO.setRole(existData.getRole());
 
-
             return new CustomOAuth2User(userDTO) ;
         }
 
