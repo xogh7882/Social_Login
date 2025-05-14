@@ -22,7 +22,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println(oAuth2User);
+        System.out.println("oAuth2User : " + oAuth2User);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
@@ -30,12 +30,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if(registrationId.equals("naver")){
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
-            System.out.println(oAuth2Response);
+            System.out.println("Naver oAuth2Response : " + oAuth2Response);
         }
 
         else if(registrationId.equals("google")){
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
-            System.out.println(oAuth2Response);
+            System.out.println("Google oAuth2Response : " +oAuth2Response);
         }
 
         else{
@@ -44,11 +44,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 
         String username = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
-        UserEntity existData = userRepository.findByUsername(username);
+        UserEntity existData = userRepository.findByToken(oAuth2Response.getProviderId());
 
         if(existData == null){
             UserEntity userEntity = new UserEntity();
-            userEntity.setUsername(username);
+            userEntity.setLoginType(oAuth2Response.getProvider());
+            userEntity.setToken(oAuth2Response.getProviderId());
             userEntity.setEmail(oAuth2Response.getEmail());
             userEntity.setName(oAuth2Response.getName());
             userEntity.setRole("ROLE_USER");
@@ -71,7 +72,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userRepository.save(existData);
 
             UserDTO userDTO = new UserDTO();
-            userDTO.setUsername(existData.getUsername());
+            userDTO.setUsername(existData.getName());
             userDTO.setName(oAuth2Response.getName());
             userDTO.setRole(existData.getRole());
 
